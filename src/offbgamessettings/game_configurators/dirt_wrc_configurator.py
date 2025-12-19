@@ -114,12 +114,17 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                     )
                     root.append(new_device)
                     tree.write(
-                        device_defines_path, encoding="utf-8", xml_declaration=True
+                        device_defines_path,
+                        encoding="utf-8",
+                        xml_declaration=True,
                     )
                     self.logs.append(
                         {
                             "status": "MODIFIED",
-                            "message": "OpenFFBoard device added to device_defines.xml.",
+                            "message": (
+                                "OpenFFBoard device added to "
+                                "device_defines.xml."
+                            ),
                         }
                     )
                     self.status = "MODIFIED"

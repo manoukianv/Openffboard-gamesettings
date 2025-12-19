@@ -102,8 +102,9 @@ class Rfactor2Configurator(BaseGameConfigurator):
                                 {
                                     "status": "ERROR",
                                     "message": (
-                                "Failed to create backup for " "Controller.JSON."
-                            ),
+                                        "Failed to create backup for "
+                                        "Controller.JSON."
+                                    ),
                                 }
                             )
                             self.status = "ERROR"
@@ -111,7 +112,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
                         self.logs.append(
                             {
                                 "status": "INFO",
-                                "message": "Modification skipped at the user's request.",
+                                "message": (
+                                    "Modification skipped at "
+                                    "the user's request."
+                                ),
                             }
                         )
                 else:
@@ -168,15 +172,16 @@ class Rfactor2Configurator(BaseGameConfigurator):
                 )
                 self.status = "RESTORED"
             except IOError:
-                    self.logs.append(
-                        {
-                            "status": "ERROR",
-                            "message": (
-                                "Failed to restore " f"{os.path.basename(controller_json_path)}."
-                            ),
-                        }
-                    )
-                    self.status = "ERROR"
+                self.logs.append(
+                    {
+                        "status": "ERROR",
+                        "message": (
+                            "Failed to restore "
+                            f"{os.path.basename(controller_json_path)}."
+                        ),
+                    }
+                )
+                self.status = "ERROR"
         else:
             self.logs.append(
                 {"status": "INFO", "message": "No backup found to restore."}
