@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "module": "offbgamessettings",
-            "args": [""],
+            "args": ["--revert"],
             "justMyCode": true
         }
     ]

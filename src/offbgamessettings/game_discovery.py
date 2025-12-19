@@ -113,7 +113,12 @@ def get_sim_racing_game_folders():
         try:
             # Load the VDF file that lists all Steam libraries
             library_folders = vdf.load(f)["libraryfolders"]
-        except (KeyError, vdf.VDFMalformedError):
+        except KeyError:
+            return {}
+        except Exception:
+            # Some versions of the `vdf` package may raise different
+            # errors when the file is malformed; be permissive and
+            # treat any parsing error as an absent library file.
             return {}
 
     games_found = {}

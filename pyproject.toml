@@ -1,9 +1,9 @@
 [project]
-name = "offbgamessettings"
-version = "0.0.1"
-description = "Utilities to manage game settings for OpenNFF Board"
+name = "OpenFFBoard Game Settings"
+version = "1.0.0"
+description = "Utilities to manage game settings for OpenFFBoard"
 readme = "README.md"
-authors = [ { name = "Your Name", email = "you@example.com" } ]
+authors = [ { name = "Vincent MANOUKIAN", email = "manoukianv@gmail.com" } ]
 license = { text = "MIT" }
 requires-python = ">=3.8"
 dependencies = [
