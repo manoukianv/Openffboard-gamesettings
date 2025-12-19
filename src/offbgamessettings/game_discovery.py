@@ -1,8 +1,30 @@
+"""
+Game and Steam Installation Discovery.
+
+This module is responsible for locating the user's Steam installation
+(on Windows and Linux) and identifying installed sim racing games.
+
+How it works:
+1.  `find_steam_path()`: Attempts to find the Steam root directory using
+    OS-specific methods (Windows registry, common Linux paths).
+2.  `get_sim_racing_game_folders()`:
+    -   Reads Steam's `libraryfolders.vdf` file to find all game library
+        folders.
+    -   Scans each library folder for `appmanifest_*.acf` files.
+    -   Filters these manifests using a predefined list of sim racing game
+        AppIDs (`SIM_RACING_APP_IDS`).
+    -   Extracts the game name and installation path from each matching
+        manifest.
+    -   Returns a structured dictionary containing the information of the
+        found games.
+"""
 import os
 import platform
 import vdf
 
-# List of AppIDs for common sim racing games on Steam
+# Dictionary of Steam AppIDs for popular sim racing games.
+# This list is used to filter installed games and only act on relevant titles.
+# The key is the Steam AppID, the value is the game's name.
 SIM_RACING_APP_IDS = {
     "244210": "Assetto Corsa",
     "805550": "Assetto Corsa Competizione",
@@ -15,11 +37,16 @@ SIM_RACING_APP_IDS = {
     "322500": "Wreckfest",
     "2399420": "Le Mans Ultimate",
     "1849250": "EA SPORTS WRC",
-    "480": "Spacewar" # Often used for testing, good for development
+    "480": "Spacewar" # Often used for testing, useful for development
 }
 
 def _get_steam_path_windows():
-    """Find Steam installation path on Windows from the registry."""
+    """
+    Finds the Steam installation path on Windows via the registry.
+
+    Returns:
+        str or None: The absolute path to the Steam directory, or None if not found.
+    """
     try:
         import winreg
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
@@ -28,7 +55,12 @@ def _get_steam_path_windows():
         return None
 
 def _get_steam_path_linux():
-    """Find Steam installation path on Linux."""
+    """
+    Finds the Steam installation path on Linux by checking common locations.
+
+    Returns:
+        str or None: The absolute path to the Steam directory, or None if not found.
+    """
     home = os.path.expanduser("~")
     paths_to_check = [
         os.path.join(home, ".steam/steam"),
@@ -41,10 +73,12 @@ def _get_steam_path_linux():
 
 def find_steam_path():
     """
-    Find the root path of the Steam installation based on the OS.
-    
+    Finds the root path of the Steam installation based on the OS.
+
+    This function acts as a dispatcher for the OS-specific search functions.
+
     Returns:
-        str: The absolute path to the Steam directory, or None if not found.
+        str or None: The absolute path to the Steam directory, or None if not found.
     """
     os_name = platform.system()
     if os_name == "Windows":
@@ -57,7 +91,14 @@ def find_steam_path():
 def get_sim_racing_game_folders():
     """
     Finds and returns the installation folders of sim racing games installed via Steam.
-    Returns a dictionary keyed by AppID, with game name and path as values.
+
+    The process involves reading Steam libraries, finding game manifests, and
+    filtering by the relevant AppIDs.
+
+    Returns:
+        dict: A dictionary where each key is a game AppID and the value is
+              another dictionary containing the 'name' and 'path' of the game.
+              Ex: {'244210': {'name': 'Assetto Corsa', 'path': '...'}}
     """
     steam_path = find_steam_path()
     if not steam_path:
@@ -70,11 +111,13 @@ def get_sim_racing_game_folders():
     
     with open(library_folders_path, "r", encoding="utf-8") as f:
         try:
+            # Load the VDF file that lists all Steam libraries
             library_folders = vdf.load(f)["libraryfolders"]
         except (KeyError, vdf.VDFMalformedError):
             return {}
 
     games_found = {}
+    # Include the main Steam folder as well as all other library folders
     steam_library_paths = [steam_path] + [
         data["path"] for _, data in library_folders.items() if "path" in data
     ]
@@ -84,13 +127,16 @@ def get_sim_racing_game_folders():
         if not os.path.isdir(steamapps_path):
             continue
 
+        # Iterate through all files in the steamapps folder
         for item in os.listdir(steamapps_path):
             if item.startswith("appmanifest_") and item.endswith(".acf"):
+                # Extract the AppID from the filename (e.g., appmanifest_244210.acf)
                 app_id = item.split("_")[1].split(".")[0]
                 if app_id in SIM_RACING_APP_IDS:
                     acf_path = os.path.join(steamapps_path, item)
                     with open(acf_path, "r", encoding="utf-8") as f:
                         try:
+                            # Load the game manifest to get details
                             acf_data = vdf.load(f)["AppState"]
                         except (KeyError, vdf.VDFMalformedError):
                             continue
@@ -101,6 +147,7 @@ def get_sim_racing_game_folders():
                     if game_name and install_dir:
                         game_path = os.path.join(steamapps_path, "common", install_dir)
                         if os.path.isdir(game_path):
+                            # Add the found game to the results dictionary
                             games_found[app_id] = {"name": game_name, "path": game_path}
                             
     return games_found
