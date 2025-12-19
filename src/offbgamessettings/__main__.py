@@ -28,15 +28,15 @@ def main():
         output.print_status("ERROR", "Steam installation not found. Please ensure Steam is installed.")
         return
 
-    game_folders = get_sim_racing_game_folders()
+    games_found = get_sim_racing_game_folders()
 
-    if game_folders:
+    if games_found:
         if args.revert:
             output.print_header("Reverting Configurations")
-            results = config_manager.revert_configurations(game_folders)
+            results = config_manager.revert_configurations(games_found)
         else:
             output.print_header("Configuration Check")
-            results = config_manager.check_and_configure_games(game_folders)
+            results = config_manager.check_and_configure_games(games_found)
         
         output.print_summary_table(results)
         output.print_details(results, verbose=args.verbose)

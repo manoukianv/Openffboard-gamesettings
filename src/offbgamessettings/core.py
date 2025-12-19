@@ -57,9 +57,7 @@ def find_steam_path():
 def get_sim_racing_game_folders():
     """
     Finds and returns the installation folders of sim racing games installed via Steam.
-
-    Returns:
-        dict: A dictionary mapping game names to their installation paths.
+    Returns a dictionary keyed by AppID, with game name and path as values.
     """
     steam_path = find_steam_path()
     if not steam_path:
@@ -76,7 +74,7 @@ def get_sim_racing_game_folders():
         except (KeyError, vdf.VDFMalformedError):
             return {}
 
-    game_folders = {}
+    games_found = {}
     steam_library_paths = [steam_path] + [
         data["path"] for _, data in library_folders.items() if "path" in data
     ]
@@ -103,6 +101,6 @@ def get_sim_racing_game_folders():
                     if game_name and install_dir:
                         game_path = os.path.join(steamapps_path, "common", install_dir)
                         if os.path.isdir(game_path):
-                            game_folders[game_name] = game_path
-
-    return game_folders
+                            games_found[app_id] = {"name": game_name, "path": game_path}
+                            
+    return games_found
