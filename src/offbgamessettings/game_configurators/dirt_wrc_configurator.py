@@ -122,8 +122,7 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                         {
                             "status": "MODIFIED",
                             "message": (
-                                "OpenFFBoard device added to "
-                                "device_defines.xml."
+                                "OpenFFBoard device added to " "device_defines.xml."
                             ),
                         }
                     )

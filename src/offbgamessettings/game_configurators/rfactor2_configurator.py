@@ -113,8 +113,7 @@ class Rfactor2Configurator(BaseGameConfigurator):
                             {
                                 "status": "INFO",
                                 "message": (
-                                    "Modification skipped at "
-                                    "the user's request."
+                                    "Modification skipped at " "the user's request."
                                 ),
                             }
                         )
