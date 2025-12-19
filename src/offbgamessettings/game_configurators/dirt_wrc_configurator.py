@@ -96,7 +96,8 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                         {
                             "status": "INFO",
                             "message": (
-                                "Backup of " f"{os.path.basename(device_defines_path)} created."
+                                "Backup of "
+                                f"{os.path.basename(device_defines_path)} created."
                             ),
                         }
                     )
@@ -127,7 +128,8 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                         {
                             "status": "ERROR",
                             "message": (
-                                f"Failed to create backup for {os.path.basename(device_defines_path)}."
+                                "Failed to create backup for "
+                                f"{os.path.basename(device_defines_path)}."
                             ),
                         }
                     )
@@ -196,9 +198,7 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "ERROR",
-                            "message": (
-                                "Could not write to openffboard.xml."
-                            ),
+                            "message": ("Could not write to openffboard.xml."),
                         }
                     )
                     self.status = "ERROR"

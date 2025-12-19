@@ -101,7 +101,9 @@ class Rfactor2Configurator(BaseGameConfigurator):
                             self.logs.append(
                                 {
                                     "status": "ERROR",
-                                    "message": "Failed to create backup for Controller.JSON.",
+                                    "message": (
+                                "Failed to create backup for " "Controller.JSON."
+                            ),
                                 }
                             )
                             self.status = "ERROR"
@@ -166,13 +168,15 @@ class Rfactor2Configurator(BaseGameConfigurator):
                 )
                 self.status = "RESTORED"
             except IOError:
-                self.logs.append(
-                    {
-                        "status": "ERROR",
-                        "message": f"Failed to restore {os.path.basename(controller_json_path)}.",
-                    }
-                )
-                self.status = "ERROR"
+                    self.logs.append(
+                        {
+                            "status": "ERROR",
+                            "message": (
+                                "Failed to restore " f"{os.path.basename(controller_json_path)}."
+                            ),
+                        }
+                    )
+                    self.status = "ERROR"
         else:
             self.logs.append(
                 {"status": "INFO", "message": "No backup found to restore."}
