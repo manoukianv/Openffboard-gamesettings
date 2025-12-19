@@ -70,7 +70,7 @@ def print_recommendation(message):
     Args:
         message (str): The recommendation to display.
     """
-    print(f"  {Fore.BLUE}Recommendation:{Style.RESET_ALL} {message}")
+    print(f"  {Fore.BLUE}Recommendation: {Style.RESET_ALL} {message}")
 
 
 def ask_user(prompt):
@@ -139,7 +139,7 @@ def print_details(results, verbose=False):
     print_header("Details")
 
     for game, data in details_to_show.items():
-        print(f"\n{Style.BRIGHT}{game}:{Style.RESET_ALL}")
+        print(f"\n{Style.BRIGHT}{game}: {Style.RESET_ALL}")
         for log in data["logs"]:
             print("  ", end="")
             print_status(log["status"], log["message"])

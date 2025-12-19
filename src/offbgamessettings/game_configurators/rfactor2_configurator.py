@@ -62,7 +62,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "INFO",
-                            "message": f"The value of 'Steering effects strength' is positive ({strength}).",
+                            "message": (
+                                f"The value of 'Steering effects strength' is positive "
+                                f"({strength})."
+                            ),
                         }
                     )
                     # Ask for user confirmation before modifying
@@ -87,7 +90,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
                             self.logs.append(
                                 {
                                     "status": "MODIFIED",
-                                    "message": "The value of 'Steering effects strength' has been inverted.",
+                                    "message": (
+                                        "The value of 'Steering effects strength' "
+                                        "has been inverted."
+                                    ),
                                 }
                             )
                             self.status = "MODIFIED"
@@ -110,7 +116,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "OK",
-                            "message": "The value of 'Steering effects strength' is already configured correctly.",
+                            "message": (
+                                "The value of 'Steering effects strength' is "
+                                "already configured correctly."
+                            ),
                         }
                     )
 
@@ -129,10 +138,7 @@ class Rfactor2Configurator(BaseGameConfigurator):
             self.logs.append(
                 {
                     "status": "ERROR",
-                    "message": (
-                        "An unexpected error occurred: "
-                        f"{e}"
-                    ),
+                    "message": ("An unexpected error occurred: " f"{e}"),
                 }
             )
             self.status = "ERROR"
@@ -152,7 +158,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
                 self.logs.append(
                     {
                         "status": "RESTORED",
-                        "message": f"{os.path.basename(controller_json_path)} restored from backup.",
+                        "message": (
+                            f"{os.path.basename(controller_json_path)} restored "
+                            "from backup."
+                        ),
                     }
                 )
                 self.status = "RESTORED"

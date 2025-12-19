@@ -2,10 +2,7 @@ import os
 
 import vdf
 
-from offbgamessettings.game_discovery import (
-    find_steam_path,
-    get_sim_racing_game_folders,
-)
+from offbgamessettings.game_discovery import get_sim_racing_game_folders
 
 
 def write_vdf_library(path, libraries):

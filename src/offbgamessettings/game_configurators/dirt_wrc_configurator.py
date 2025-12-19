@@ -33,8 +33,8 @@ class DirtWrcConfigurator(BaseGameConfigurator):
         Determines the paths of the configuration files based on the game's AppID.
 
         Returns:
-            tuple: A tuple containing the path to `device_defines.xml` and
-                   the `actionmaps` directory, or (None, None) if the game is not recognized.
+            tuple: (device_defines_path, actionmaps_path) or (None, None) if
+                   the game's AppID is not recognized.
         """
         if self.app_id == "1849250":  # EA SPORTS WRC
             device_path = os.path.join(
@@ -47,7 +47,12 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                 "device_defines.xml",
             )
             actionmaps_path = os.path.join(
-                self.game_path, "WRC", "Content", "input", "Windows", "actionmaps"
+                self.game_path,
+                "WRC",
+                "Content",
+                "input",
+                "Windows",
+                "actionmaps",
             )
             return device_path, actionmaps_path
         elif self.app_id == "690790":  # DiRT Rally 2.0
@@ -90,7 +95,9 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "INFO",
-                            "message": f"Backup of {os.path.basename(device_defines_path)} created.",
+                            "message": (
+                                "Backup of " f"{os.path.basename(device_defines_path)} created."
+                            ),
                         }
                     )
                     # Create and add the new device element
@@ -129,7 +136,10 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                 self.logs.append(
                     {
                         "status": "OK",
-                        "message": "OpenFFBoard device is already configured in device_defines.xml.",
+                        "message": (
+                            "OpenFFBoard device is already configured in "
+                            "device_defines.xml."
+                        ),
                     }
                 )
 
@@ -151,21 +161,21 @@ class DirtWrcConfigurator(BaseGameConfigurator):
             if not os.path.exists(openffboard_xml_path):
                 # XML content for the basic action mapping
                 xml_content = (
-                    "<action_map name=\"openffboard\" device_name=\"openffboard\" "
-                    "library=\"lib_direct_input\">"
+                    '<action_map name="openffboard" device_name="openffboard" '
+                    'library="lib_direct_input">'
                     "<axis_defaults>"
-                    "<axis name=\"di_x_axis\">"
-                    "<action deadzone=\"0\" name=\"driving.steer.left\" />"
-                    "<action deadzone=\"0\" name=\"driving.steer.right\" />"
+                    '<axis name="di_x_axis">'
+                    '<action deadzone="0" name="driving.steer.left" />'
+                    '<action deadzone="0" name="driving.steer.right" />'
                     "</axis>"
                     "</axis_defaults>"
-                    "<group name=\"driving\">"
-                    "<group name=\"steer\">"
-                    "<action name=\"left\">"
-                    "<axis name=\"di_x_axis\" type=\"lower\" />"
+                    '<group name="driving">'
+                    '<group name="steer">'
+                    '<action name="left">'
+                    '<axis name="di_x_axis" type="lower" />'
                     "</action>"
-                    "<action name=\"right\">"
-                    "<axis name=\"di_x_axis\" type=\"upper\" />"
+                    '<action name="right">'
+                    '<axis name="di_x_axis" type="upper" />'
                     "</action>"
                     "</group>"
                     "</group>"
@@ -186,7 +196,9 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "ERROR",
-                            "message": "Could not write to openffboard.xml.",
+                            "message": (
+                                "Could not write to openffboard.xml."
+                            ),
                         }
                     )
                     self.status = "ERROR"
@@ -226,7 +238,10 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                 self.logs.append(
                     {
                         "status": "RESTORED",
-                        "message": f"{os.path.basename(device_defines_path)} restored from backup.",
+                        "message": (
+                            f"{os.path.basename(device_defines_path)} restored "
+                            "from backup."
+                        ),
                     }
                 )
                 self.status = "RESTORED"
@@ -234,7 +249,10 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                 self.logs.append(
                     {
                         "status": "ERROR",
-                        "message": f"Failed to restore {os.path.basename(device_defines_path)}.",
+                        "message": (
+                            "Failed to restore "
+                            f"{os.path.basename(device_defines_path)}."
+                        ),
                     }
                 )
                 self.status = "ERROR"
