@@ -1,5 +1,5 @@
 [project]
-name = "OpenFFBoard Game Settings"
+name = "OpenFFBoard_GameSettings"
 version = "1.0.0"
 description = "Utilities to manage game settings for OpenFFBoard"
 readme = "README.md"
