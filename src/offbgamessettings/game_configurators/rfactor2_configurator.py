@@ -15,7 +15,7 @@ import json
 import shutil
 from .base_configurator import BaseGameConfigurator
 from ..utils import backup_file
-from .. import output
+from .. import console_ui
 
 class Rfactor2Configurator(BaseGameConfigurator):
     
@@ -37,7 +37,7 @@ class Rfactor2Configurator(BaseGameConfigurator):
                 
                 if strength > 0:
                     self.logs.append({"status": "INFO", "message": f"'Steering effects strength' is positive ({strength})."})
-                    choice = output.ask_user("Do you want to apply the recommended negative value? (y/n):").lower()
+                    choice = console_ui.ask_user("Do you want to apply the recommended negative value? (y/n):").lower()
                     
                     if choice == 'y':
                         if backup_file(controller_json_path):

@@ -1,4 +1,4 @@
-# src/offbgamessettings/output.py
+# src/offbgamessettings/console_ui.py
 import colorama
 from colorama import Fore, Style, init
 

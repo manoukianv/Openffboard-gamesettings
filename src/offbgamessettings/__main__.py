@@ -1,8 +1,8 @@
 # src/offbgamessettings/__main__.py
 import argparse
-from offbgamessettings.core import get_sim_racing_game_folders, find_steam_path
-from offbgamessettings import config_manager
-from offbgamessettings import output
+from offbgamessettings.game_discovery import get_sim_racing_game_folders, find_steam_path
+from offbgamessettings import config_orchestrator
+from offbgamessettings import console_ui
 
 def main():
     """
@@ -22,28 +22,28 @@ def main():
     )
     args = parser.parse_args()
 
-    output.print_header("OpenFFBoard Game Settings Utility")
+    console_ui.print_header("OpenFFBoard Game Settings Utility")
 
     if not find_steam_path():
-        output.print_status("ERROR", "Steam installation not found. Please ensure Steam is installed.")
+        console_ui.print_status("ERROR", "Steam installation not found. Please ensure Steam is installed.")
         return
 
     games_found = get_sim_racing_game_folders()
 
     if games_found:
         if args.revert:
-            output.print_header("Reverting Configurations")
-            results = config_manager.revert_configurations(games_found)
+            console_ui.print_header("Reverting Configurations")
+            results = config_orchestrator.revert_configurations(games_found)
         else:
-            output.print_header("Configuration Check")
-            results = config_manager.check_and_configure_games(games_found)
+            console_ui.print_header("Configuration Check")
+            results = config_orchestrator.check_and_configure_games(games_found)
         
-        output.print_summary_table(results)
-        output.print_details(results, verbose=args.verbose)
+        console_ui.print_summary_table(results)
+        console_ui.print_details(results, verbose=args.verbose)
         
-        output.print_header("Process Finished")
+        console_ui.print_header("Process Finished")
     else:
-        output.print_status("INFO", "No supported sim racing games found.")
+        console_ui.print_status("INFO", "No supported sim racing games found.")
 
 if __name__ == "__main__":
     main()
