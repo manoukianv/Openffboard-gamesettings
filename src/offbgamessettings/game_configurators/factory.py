@@ -11,31 +11,39 @@ to support a new game, simply create a new configurator class and
 add it to the mapping table.
 """
 from .dirt_wrc_configurator import DirtWrcConfigurator
-from .rfactor2_configurator import Rfactor2Configurator
 from .recommendation_configurator import RecommendationConfigurator
+from .rfactor2_configurator import Rfactor2Configurator
 
 # --- Mapping table from AppID to configurator class ---
 # This is the core of the factory. To add support for a new game,
 # simply add a new entry here.
 CONFIGURATOR_MAP = {
-    "1849250": DirtWrcConfigurator,        # EA SPORTS WRC
-    "690790": DirtWrcConfigurator,         # DiRT Rally 2.0
-    "365960": Rfactor2Configurator,        # rFactor 2
-    "1134570": RecommendationConfigurator, # F1 2020 (recommendation example)
-    "1692250": RecommendationConfigurator, # F1 22 (recommendation example)
+    "1849250": DirtWrcConfigurator,  # EA SPORTS WRC
+    "690790": DirtWrcConfigurator,  # DiRT Rally 2.0
+    "365960": Rfactor2Configurator,  # rFactor 2
+    "1134570": RecommendationConfigurator,  # F1 2020 (recommendation example)
+    "1692250": RecommendationConfigurator,  # F1 22 (recommendation example)
 }
 
 # --- Specific recommendations for games that need them ---
 # Used by the RecommendationConfigurator.
 RECOMMENDATIONS = {
-    "1134570": ["Disable all steering assists.", "Set the steering range to 360 degrees."],
-    "1692250": ["Disable all steering assists.", "Set the steering range to 360 degrees."],
+    "1134570": [
+        "Disable all steering assists.",
+        "Set the steering range to 360 degrees.",
+    ],
+    "1692250": [
+        "Disable all steering assists.",
+        "Set the steering range to 360 degrees.",
+    ],
 }
+
 
 class ConfiguratorFactory:
     """
     A static factory for creating instances of game configurators.
     """
+
     @staticmethod
     def get_configurator(app_id, game_name, game_path):
         """
@@ -51,11 +59,11 @@ class ConfiguratorFactory:
                                         a mapping exists, otherwise None.
         """
         config_class = CONFIGURATOR_MAP.get(app_id)
-        
+
         if not config_class:
             # No configurator is defined for this game
             return None
-        
+
         # Special case for the recommendation configurator, which needs
         # additional arguments during its initialization.
         if config_class == RecommendationConfigurator:

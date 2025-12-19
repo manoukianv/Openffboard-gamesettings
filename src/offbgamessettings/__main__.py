@@ -18,9 +18,13 @@ Workflow:
     table and detailed logs (depending on the `--verbose` option).
 """
 import argparse
-from offbgamessettings.game_discovery import get_sim_racing_game_folders, find_steam_path
-from offbgamessettings import config_orchestrator
-from offbgamessettings import console_ui
+
+from offbgamessettings import config_orchestrator, console_ui
+from offbgamessettings.game_discovery import (
+    find_steam_path,
+    get_sim_racing_game_folders,
+)
+
 
 def main():
     """
@@ -28,16 +32,19 @@ def main():
     Finds and configures sim racing games for OpenFFBoard.
     """
     # Set up the argument parser for the command line
-    parser = argparse.ArgumentParser(description="Game configuration utility for OpenFFBoard")
+    parser = argparse.ArgumentParser(
+        description="Game configuration utility for OpenFFBoard"
+    )
     parser.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
-        help="Displays detailed information for all checks, including successful modifications."
+        help="Displays detailed information for all checks, including successful modifications.",
     )
     parser.add_argument(
         "--revert",
         action="store_true",
-        help="Restores the original game configuration files from backups."
+        help="Restores the original game configuration files from backups.",
     )
     args = parser.parse_args()
 
@@ -45,7 +52,9 @@ def main():
 
     # Step 1: Check if Steam is installed
     if not find_steam_path():
-        console_ui.print_status("ERROR", "Steam installation not found. Please ensure Steam is installed.")
+        console_ui.print_status(
+            "ERROR", "Steam installation not found. Please ensure Steam is installed."
+        )
         return
 
     # Step 2: Discover installed simulation games
@@ -59,15 +68,16 @@ def main():
         else:
             console_ui.print_header("Checking configuration")
             results = config_orchestrator.check_and_configure_games(games_found)
-        
+
         # Step 4: Display the results to the user
         console_ui.print_summary_table(results)
         console_ui.print_details(results, verbose=args.verbose)
-        
+
         console_ui.print_header("Process finished")
     else:
         # No supported games were found
         console_ui.print_status("INFO", "No supported sim racing games were found.")
+
 
 # Ensures that the main() function is called when the script is executed directly
 if __name__ == "__main__":

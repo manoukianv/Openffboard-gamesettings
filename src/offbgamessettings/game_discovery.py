@@ -20,6 +20,7 @@ How it works:
 """
 import os
 import platform
+
 import vdf
 
 # Dictionary of Steam AppIDs for popular sim racing games.
@@ -37,8 +38,9 @@ SIM_RACING_APP_IDS = {
     "322500": "Wreckfest",
     "2399420": "Le Mans Ultimate",
     "1849250": "EA SPORTS WRC",
-    "480": "Spacewar" # Often used for testing, useful for development
+    "480": "Spacewar",  # Often used for testing, useful for development
 }
+
 
 def _get_steam_path_windows():
     """
@@ -49,10 +51,12 @@ def _get_steam_path_windows():
     """
     try:
         import winreg
+
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Valve\Steam")
         return winreg.QueryValueEx(key, "SteamPath")[0]
     except (ImportError, FileNotFoundError):
         return None
+
 
 def _get_steam_path_linux():
     """
@@ -71,6 +75,7 @@ def _get_steam_path_linux():
             return path
     return None
 
+
 def find_steam_path():
     """
     Finds the root path of the Steam installation based on the OS.
@@ -87,6 +92,7 @@ def find_steam_path():
         return _get_steam_path_linux()
     else:
         return None
+
 
 def get_sim_racing_game_folders():
     """
@@ -108,7 +114,7 @@ def get_sim_racing_game_folders():
 
     if not os.path.exists(library_folders_path):
         return {}
-    
+
     with open(library_folders_path, "r", encoding="utf-8") as f:
         try:
             # Load the VDF file that lists all Steam libraries
@@ -145,14 +151,14 @@ def get_sim_racing_game_folders():
                             acf_data = vdf.load(f)["AppState"]
                         except (KeyError, vdf.VDFMalformedError):
                             continue
-                    
+
                     game_name = acf_data.get("name")
                     install_dir = acf_data.get("installdir")
-                    
+
                     if game_name and install_dir:
                         game_path = os.path.join(steamapps_path, "common", install_dir)
                         if os.path.isdir(game_path):
                             # Add the found game to the results dictionary
                             games_found[app_id] = {"name": game_name, "path": game_path}
-                            
+
     return games_found

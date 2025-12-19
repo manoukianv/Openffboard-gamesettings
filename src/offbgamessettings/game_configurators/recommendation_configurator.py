@@ -19,10 +19,12 @@ How it works:
 """
 from .base_configurator import BaseGameConfigurator
 
+
 class RecommendationConfigurator(BaseGameConfigurator):
     """
     A configurator that displays recommendations instead of modifying files.
     """
+
     def __init__(self, app_id, game_name, game_path, recommendations):
         """
         Initializes the configurator with game-specific recommendations.
@@ -50,11 +52,13 @@ class RecommendationConfigurator(BaseGameConfigurator):
     def revert_configuration(self):
         """
         Does nothing because no changes are made by this configurator.
-        
+
         Returns:
             dict: A "NOT REQUIRED" status to indicate that no action
                   was necessary.
         """
         self.status = "NOT REQUIRED"
-        self.logs.append({"status": "INFO", "message": "No changes to revert for recommendations."})
+        self.logs.append(
+            {"status": "INFO", "message": "No changes to revert for recommendations."}
+        )
         return {"status": self.status, "logs": self.logs}

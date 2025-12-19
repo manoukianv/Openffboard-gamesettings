@@ -1,11 +1,15 @@
-import os
-import json
-import vdf
-from pathlib import Path
 import builtins
+import json
+import os
 import platform
+from pathlib import Path
 
-from offbgamessettings.game_discovery import get_sim_racing_game_folders, find_steam_path
+import vdf
+
+from offbgamessettings.game_discovery import (
+    find_steam_path,
+    get_sim_racing_game_folders,
+)
 
 
 def write_vdf_library(path, libraries):
@@ -37,17 +41,23 @@ def test_get_sim_racing_game_folders_basic(tmp_path, monkeypatch):
     manifest = steamapps / "appmanifest_244210.acf"
     write_acf(manifest, "244210", "Assetto Corsa", "assettocorsa")
 
-    monkeypatch.setattr('offbgamessettings.game_discovery.find_steam_path', lambda: str(steam))
+    monkeypatch.setattr(
+        "offbgamessettings.game_discovery.find_steam_path", lambda: str(steam)
+    )
 
     games = get_sim_racing_game_folders()
 
     assert "244210" in games
     assert games["244210"]["name"] == "Assetto Corsa"
-    assert games["244210"]["path"].endswith(os.path.join("steamapps", "common", "assettocorsa"))
+    assert games["244210"]["path"].endswith(
+        os.path.join("steamapps", "common", "assettocorsa")
+    )
 
 
 def test_get_sim_racing_game_folders_no_steam(monkeypatch):
-    monkeypatch.setattr('offbgamessettings.game_discovery.find_steam_path', lambda: None)
+    monkeypatch.setattr(
+        "offbgamessettings.game_discovery.find_steam_path", lambda: None
+    )
     assert get_sim_racing_game_folders() == {}
 
 
@@ -59,6 +69,8 @@ def test_get_sim_racing_game_folders_malformed_vdf(tmp_path, monkeypatch):
     lib_vdf = steamapps / "libraryfolders.vdf"
     lib_vdf.write_text("not a vdf")
 
-    monkeypatch.setattr('offbgamessettings.game_discovery.find_steam_path', lambda: str(steam))
+    monkeypatch.setattr(
+        "offbgamessettings.game_discovery.find_steam_path", lambda: str(steam)
+    )
 
     assert get_sim_racing_game_folders() == {}

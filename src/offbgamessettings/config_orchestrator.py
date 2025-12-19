@@ -16,6 +16,7 @@ Architecture:
 """
 from .game_configurators.factory import ConfiguratorFactory
 
+
 def check_and_configure_games(games_found):
     """
     Checks and configures all detected games.
@@ -34,11 +35,13 @@ def check_and_configure_games(games_found):
     """
     results = {}
     for app_id, game_data in games_found.items():
-        game_name = game_data['name']
-        game_path = game_data['path']
+        game_name = game_data["name"]
+        game_path = game_data["path"]
         # Use the factory to get the specific configurator for this game
-        configurator = ConfiguratorFactory.get_configurator(app_id, game_name, game_path)
-        
+        configurator = ConfiguratorFactory.get_configurator(
+            app_id, game_name, game_path
+        )
+
         if configurator:
             # The game has a configurator, so we run it
             results[game_name] = configurator.check_and_configure()
@@ -46,6 +49,7 @@ def check_and_configure_games(games_found):
             # The game was detected, but no action is required
             results[game_name] = {"status": "NOT REQUIRED", "logs": []}
     return results
+
 
 def revert_configurations(games_found):
     """
@@ -64,11 +68,13 @@ def revert_configurations(games_found):
     """
     results = {}
     for app_id, game_data in games_found.items():
-        game_name = game_data['name']
-        game_path = game_data['path']
+        game_name = game_data["name"]
+        game_path = game_data["path"]
         # Use the factory to get the specific configurator for this game
-        configurator = ConfiguratorFactory.get_configurator(app_id, game_name, game_path)
-        
+        configurator = ConfiguratorFactory.get_configurator(
+            app_id, game_name, game_path
+        )
+
         if configurator:
             # The game has a configurator, so we run the revert
             results[game_name] = configurator.revert_configuration()
@@ -76,4 +82,3 @@ def revert_configurations(games_found):
             # The game was detected, but no action is required
             results[game_name] = {"status": "NOT REQUIRED", "logs": []}
     return results
-

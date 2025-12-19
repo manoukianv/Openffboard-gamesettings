@@ -1,5 +1,10 @@
-from offbgamessettings.game_configurators.factory import ConfiguratorFactory, CONFIGURATOR_MAP
-from offbgamessettings.game_configurators.recommendation_configurator import RecommendationConfigurator
+from offbgamessettings.game_configurators.factory import (
+    CONFIGURATOR_MAP,
+    ConfiguratorFactory,
+)
+from offbgamessettings.game_configurators.recommendation_configurator import (
+    RecommendationConfigurator,
+)
 
 
 def test_get_configurator_unknown():

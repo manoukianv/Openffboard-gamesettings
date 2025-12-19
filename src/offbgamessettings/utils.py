@@ -7,6 +7,7 @@ different game configurators, such as creating file backups.
 import os
 import shutil
 
+
 def backup_file(file_path):
     """
     Creates a backup of a file by adding a custom extension.
@@ -23,10 +24,10 @@ def backup_file(file_path):
     """
     if not os.path.exists(file_path):
         return False
-    
+
     # Build the backup path
     backup_path = file_path + ".bak_offb_settings"
-    
+
     try:
         # Copy the original file to the new backup location
         shutil.copy2(file_path, backup_path)

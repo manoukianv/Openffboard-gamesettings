@@ -36,17 +36,19 @@ STATUS_COLORS = {
     "ERROR": Fore.RED,
     "NOT REQUIRED": Fore.BLACK,
     "RESTORED": Fore.RED,
-    "NOT FOUND": Fore.YELLOW
+    "NOT FOUND": Fore.YELLOW,
 }
+
 
 def print_header(title):
     """
     Prints a formatted section header to improve readability.
-    
+
     Args:
         title (str): The text to display in the header.
     """
     print(f"\n{Style.BRIGHT}{Fore.CYAN}--- {title} ---{Style.RESET_ALL}")
+
 
 def print_status(status, message):
     """
@@ -61,6 +63,7 @@ def print_status(status, message):
     color = STATUS_COLORS.get(status.upper(), Fore.WHITE)
     print(f"[{color}{Style.BRIGHT}{status.upper()}{Style.RESET_ALL}] {message}")
 
+
 def print_recommendation(message):
     """
     Prints a recommendation message with a distinctive style.
@@ -69,6 +72,7 @@ def print_recommendation(message):
         message (str): The recommendation to display.
     """
     print(f"  {Fore.BLUE}Recommendation:{Style.RESET_ALL} {message}")
+
 
 def ask_user(prompt):
     """
@@ -82,6 +86,7 @@ def ask_user(prompt):
     """
     return input(f"{Fore.YELLOW}{prompt} {Style.RESET_ALL}")
 
+
 def print_summary_table(results):
     """
     Prints a summary table of the results of all game checks.
@@ -90,16 +95,17 @@ def print_summary_table(results):
         results (dict): The results dictionary returned by the orchestrator.
     """
     print_header("Summary")
-    
+
     max_len = max(len(game) for game in results.keys()) if results else 0
-    
+
     print(f"{'Game'.ljust(max_len)} | Status")
     print(f"{'-' * max_len}-|--------")
-    
+
     for game, data in results.items():
-        status = data['status']
+        status = data["status"]
         color = STATUS_COLORS.get(status.upper(), Fore.WHITE)
         print(f"{game.ljust(max_len)} | {color}{Style.BRIGHT}{status}{Style.RESET_ALL}")
+
 
 def print_details(results, verbose=False):
     """
@@ -116,15 +122,15 @@ def print_details(results, verbose=False):
     details_to_show = {}
     for game, data in results.items():
         logs_to_show = []
-        for log in data['logs']:
-            status = log['status'].upper()
+        for log in data["logs"]:
+            status = log["status"].upper()
             # Always show warnings and errors
             if status in ["WARNING", "ERROR"]:
                 logs_to_show.append(log)
             # Only show other statuses in verbose mode
             elif verbose and status in ["INFO", "MODIFIED", "OK"]:
                 logs_to_show.append(log)
-        
+
         if logs_to_show:
             details_to_show[game] = {"logs": logs_to_show}
 
@@ -132,9 +138,9 @@ def print_details(results, verbose=False):
         return
 
     print_header("Details")
-    
+
     for game, data in details_to_show.items():
         print(f"\n{Style.BRIGHT}{game}:{Style.RESET_ALL}")
-        for log in data['logs']:
-            print(f"  ", end="") 
-            print_status(log['status'], log['message'])
+        for log in data["logs"]:
+            print(f"  ", end="")
+            print_status(log["status"], log["message"])

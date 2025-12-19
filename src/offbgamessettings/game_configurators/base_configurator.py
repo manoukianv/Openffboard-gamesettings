@@ -12,13 +12,14 @@ new game configurations.
 """
 from abc import ABC, abstractmethod
 
+
 class BaseGameConfigurator(ABC):
     """
     Abstract base class for game configurators.
 
     Each subclass must implement the `check_and_configure` and
     `revert_configuration` methods.
-    
+
     Attributes:
         app_id (str): The Steam AppID of the game.
         game_name (str): The name of the game.
@@ -26,6 +27,7 @@ class BaseGameConfigurator(ABC):
         logs (list): A list to store log messages during operations.
         status (str): The final status of the configuration check.
     """
+
     def __init__(self, app_id, game_name, game_path):
         """
         Initializes the configurator with game-specific data.
