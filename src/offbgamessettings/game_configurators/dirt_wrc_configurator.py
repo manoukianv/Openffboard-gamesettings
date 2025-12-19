@@ -68,7 +68,10 @@ class DirtWrcConfigurator(BaseGameConfigurator):
             self.logs.append(
                 {
                     "status": "WARNING",
-                    "message": "Could not find device_defines.xml. The game may be corrupt or incomplete.",
+                    "message": (
+                        "Could not find device_defines.xml. The game may be corrupt or "
+                        "incomplete."
+                    ),
                 }
             )
             self.status = "WARNING"
@@ -116,7 +119,9 @@ class DirtWrcConfigurator(BaseGameConfigurator):
                     self.logs.append(
                         {
                             "status": "ERROR",
-                            "message": f"Failed to create backup for {os.path.basename(device_defines_path)}.",
+                            "message": (
+                                f"Failed to create backup for {os.path.basename(device_defines_path)}."
+                            ),
                         }
                     )
                     self.status = "ERROR"
@@ -132,7 +137,10 @@ class DirtWrcConfigurator(BaseGameConfigurator):
             self.logs.append(
                 {
                     "status": "ERROR",
-                    "message": f"Failed to parse {os.path.basename(device_defines_path)}. The file may be corrupt.",
+                    "message": (
+                        f"Failed to parse {os.path.basename(device_defines_path)}. "
+                        "The file may be corrupt."
+                    ),
                 }
             )
             self.status = "ERROR"
@@ -142,7 +150,27 @@ class DirtWrcConfigurator(BaseGameConfigurator):
             openffboard_xml_path = os.path.join(actionmaps_path, "openffboard.xml")
             if not os.path.exists(openffboard_xml_path):
                 # XML content for the basic action mapping
-                xml_content = """<action_map name="openffboard" device_name="openffboard" library="lib_direct_input"><axis_defaults><axis name="di_x_axis"><action deadzone="0" name="driving.steer.left" /><action deadzone="0" name="driving.steer.right" /></axis></axis_defaults><group name="driving"><group name="steer"><action name="left"><axis name="di_x_axis" type="lower" /></action><action name="right"><axis name="di_x_axis" type="upper" /></action></group></group></action_map>"""
+                xml_content = (
+                    "<action_map name=\"openffboard\" device_name=\"openffboard\" "
+                    "library=\"lib_direct_input\">"
+                    "<axis_defaults>"
+                    "<axis name=\"di_x_axis\">"
+                    "<action deadzone=\"0\" name=\"driving.steer.left\" />"
+                    "<action deadzone=\"0\" name=\"driving.steer.right\" />"
+                    "</axis>"
+                    "</axis_defaults>"
+                    "<group name=\"driving\">"
+                    "<group name=\"steer\">"
+                    "<action name=\"left\">"
+                    "<axis name=\"di_x_axis\" type=\"lower\" />"
+                    "</action>"
+                    "<action name=\"right\">"
+                    "<axis name=\"di_x_axis\" type=\"upper\" />"
+                    "</action>"
+                    "</group>"
+                    "</group>"
+                    "</action_map>"
+                )
                 try:
                     with open(openffboard_xml_path, "w", encoding="utf-8") as f:
                         f.write(xml_content)

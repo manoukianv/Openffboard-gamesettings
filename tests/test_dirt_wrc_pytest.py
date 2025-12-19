@@ -1,10 +1,8 @@
-import os
 import xml.etree.ElementTree as ET
 
 from offbgamessettings.game_configurators.dirt_wrc_configurator import (
     DirtWrcConfigurator,
 )
-from offbgamessettings.utils import backup_file
 
 
 def create_device_defines(path, with_device=False):

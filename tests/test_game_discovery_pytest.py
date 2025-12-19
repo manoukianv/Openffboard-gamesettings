@@ -1,8 +1,4 @@
-import builtins
-import json
 import os
-import platform
-from pathlib import Path
 
 import vdf
 

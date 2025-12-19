@@ -39,7 +39,10 @@ def main():
         "-v",
         "--verbose",
         action="store_true",
-        help="Displays detailed information for all checks, including successful modifications.",
+        help=(
+            "Displays detailed information for all checks, including "
+            "successful modifications."
+        ),
     )
     parser.add_argument(
         "--revert",

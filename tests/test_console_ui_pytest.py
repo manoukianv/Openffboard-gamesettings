@@ -1,4 +1,3 @@
-import builtins
 import re
 
 from offbgamessettings import console_ui

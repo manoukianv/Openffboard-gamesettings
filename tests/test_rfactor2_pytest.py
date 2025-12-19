@@ -1,6 +1,5 @@
 import json
 
-from offbgamessettings import console_ui
 from offbgamessettings.game_configurators.rfactor2_configurator import (
     Rfactor2Configurator,
 )

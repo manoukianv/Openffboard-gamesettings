@@ -43,7 +43,10 @@ class Rfactor2Configurator(BaseGameConfigurator):
             self.logs.append(
                 {
                     "status": "WARNING",
-                    "message": "Controller.JSON file not found. The user profile may not have been created yet.",
+                    "message": (
+                        "Controller.JSON file not found. The user profile may not "
+                        "have been created yet."
+                    ),
                 }
             )
             self.status = "WARNING"
@@ -64,7 +67,8 @@ class Rfactor2Configurator(BaseGameConfigurator):
                     )
                     # Ask for user confirmation before modifying
                     choice = console_ui.ask_user(
-                        "Do you want to apply the recommended negative value? (y/n): "
+                        "Do you want to apply the recommended negative value? "
+                        "(y/n): "
                     ).lower()
 
                     if choice == "y":
@@ -114,13 +118,22 @@ class Rfactor2Configurator(BaseGameConfigurator):
             self.logs.append(
                 {
                     "status": "ERROR",
-                    "message": f"Failed to parse {os.path.basename(controller_json_path)}. The file may be corrupt.",
+                    "message": (
+                        f"Failed to parse {os.path.basename(controller_json_path)}. "
+                        "The file may be corrupt."
+                    ),
                 }
             )
             self.status = "ERROR"
         except Exception as e:
             self.logs.append(
-                {"status": "ERROR", "message": f"An unexpected error occurred: {e}"}
+                {
+                    "status": "ERROR",
+                    "message": (
+                        "An unexpected error occurred: "
+                        f"{e}"
+                    ),
+                }
             )
             self.status = "ERROR"
 

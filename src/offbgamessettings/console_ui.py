@@ -19,7 +19,6 @@ Structure:
     messages, or summary tables.
 -   Interaction Functions: `ask_user` for asking the user questions.
 """
-import colorama
 from colorama import Fore, Style, init
 
 # Initialize colorama to work on all platforms
@@ -142,5 +141,5 @@ def print_details(results, verbose=False):
     for game, data in details_to_show.items():
         print(f"\n{Style.BRIGHT}{game}:{Style.RESET_ALL}")
         for log in data["logs"]:
-            print(f"  ", end="")
+            print("  ", end="")
             print_status(log["status"], log["message"])
